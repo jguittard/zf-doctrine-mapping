@@ -12,11 +12,7 @@
 
 return [
     'doctrine-mappers' => [
-        'target_dir' => 'data/orm/hydrators',
-        'Jam\Mapper\Offer' => [
-            'entity_class' => 'Jam\Entity\Offer',
-            'object_manager' => 'doctrine.entitymanager.orm_default',
-        ],
+        'target_dir' => '',
     ],
     'zf-doctrine-querybuilder-options' => [
         'filter_key' => 'filter',

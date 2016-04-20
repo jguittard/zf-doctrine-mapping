@@ -14,5 +14,12 @@
 namespace ZF\Doctrine;
 
 return [
-
+    'service_manager' => [
+        'factories' => [
+            'ZfDoctrineQueryBuilderFilterManagerOrm' => 'ZF\Doctrine\QueryBuilder\Filter\Service\ORMFilterManagerFactory',
+            'ZfDoctrineQueryBuilderFilterManagerOdm' => 'ZF\Doctrine\QueryBuilder\Filter\Service\ODMFilterManagerFactory',
+            'ZfDoctrineQueryBuilderOrderByManagerOrm' => 'ZF\Doctrine\QueryBuilder\OrderBy\Service\ORMOrderByManagerFactory',
+            'ZfDoctrineQueryBuilderOrderByManagerOdm' => 'ZF\Doctrine\QueryBuilder\OrderBy\Service\ODMOrderByManagerFactory',
+        ],
+    ],
 ];
