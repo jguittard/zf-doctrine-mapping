@@ -1,0 +1,62 @@
+{
+  "name": "zfcampus/zf-doctrine-mapping",
+  "type": "library",
+  "description": "Mappers and QueryBuilder for Doctrine",
+  "keywords": [
+    "doctrine",
+    "filter",
+    "module",
+    "zend",
+    "zf2"
+  ],
+  "homepage": "https://github.com/zfcampus/zf-doctrine-mapping",
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Julien Guittard",
+      "email": "julien.guittard@me.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5 | ^7.0",
+    "doctrine/doctrine-module": "~1.0",
+    "zendframework/zend-modulemanager": "~2.5",
+    "zendframework/zend-mvc": "~2.5",
+    "zendframework/zend-servicemanager": "~2.5",
+    "ocramius/generated-hydrator": "~2.0"
+  },
+  "require-dev": {
+    "doctrine/doctrine-orm-module": "0.*@dev",
+    "phpunit/phpunit": "^4.1",
+    "squizlabs/php_codesniffer": "^2.0",
+    "behat/behat": "^3.1",
+    "zendframework/zend-loader": "^2.5"
+  },
+  "suggest": {
+    "ext/mongo": "Mongo extension, if using ODM",
+    "doctrine/doctrine-mongo-odm-module": "v0.*, if you wish to use the Doctrine ODM",
+    "doctrine/doctrine-orm-module": "v0.*, if you wish to use the Doctrine ORM"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "ZF\\Doctrine\\": "src/"
+    },
+    "classmap": [
+      "Module.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ZF\\Doctrine\\Features\\": "features/bootstrap/",
+      "ZFTest\\Doctrine\\": "test/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev",
+      "dev-develop": "1.1-dev"
+    }
+  }
+}
