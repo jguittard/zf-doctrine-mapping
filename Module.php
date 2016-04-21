@@ -74,23 +74,35 @@ class Module implements ConfigProviderInterface, AutoloaderProviderInterface, De
             'ZF\Doctrine\QueryBuilder\Filter\FilterInterface',
             'getDoctrineQueryBuilderFilterOrmConfig'
         );
-        $serviceListener->addServiceManager(
+        /*$serviceListener->addServiceManager(
             'ZfDoctrineQueryBuilderFilterManagerOdm',
             'zf-doctrine-querybuilder-filter-odm',
             'ZF\Doctrine\QueryBuilder\Filter\FilterInterface',
             'getDoctrineQueryBuilderFilterOdmConfig'
-        );
+        );*/
         $serviceListener->addServiceManager(
             'ZfDoctrineQueryBuilderOrderByManagerOrm',
             'zf-doctrine-querybuilder-orderby-orm',
             'ZF\Doctrine\QueryBuilder\OrderBy\OrderByInterface',
             'getDoctrineQueryBuilderOrderByOrmConfig'
         );
-        $serviceListener->addServiceManager(
+        /*$serviceListener->addServiceManager(
             'ZfDoctrineQueryBuilderOrderByManagerOdm',
             'zf-doctrine-querybuilder-orderby-odm',
             'ZF\Doctrine\QueryBuilder\OrderBy\OrderByInterface',
             'getDoctrineQueryBuilderOrderByOdmConfig'
+        );*/
+        $serviceListener->addServiceManager(
+            'ZfDoctrineQueryProviderManager',
+            'zf-doctrine-query-provider',
+            'ZF\Doctrine\Query\Provider\QueryProviderInterface',
+            'getZfDoctrineQueryProviderConfig'
         );
+        /*$serviceListener->addServiceManager(
+            'ZfDoctrineQueryCreateFilterManager',
+            'zf-doctrine-query-create-filter',
+            'ZF\Doctrine\Server\Query\CreateFilter\QueryCreateFilterInterface',
+            'getZfDoctrineQueryCreateFilterConfig'
+        );*/
     }
 }
