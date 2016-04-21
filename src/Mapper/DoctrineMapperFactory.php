@@ -23,6 +23,7 @@ use ZF\Doctrine\Query\Provider\QueryProviderInterface;
  */
 class DoctrineMapperFactory implements AbstractFactoryInterface
 {
+    const DEFAULT_MAPPER_CLASS = 'ZF\Doctrine\Mapper\DoctrineMapper';
     /**
      * Cache for canCreateServiceName lookups
      *
@@ -57,7 +58,7 @@ class DoctrineMapperFactory implements AbstractFactoryInterface
 
         $config = $config['doctrine-mappers'][$requestedName];
 
-        $className = isset($config['class']) ? $config['class'] : $requestedName;
+        $className = isset($config['class']) ? $config['class'] : self::DEFAULT_MAPPER_CLASS;
         $className = $this->normalizeClassname($className);
         $reflection = new \ReflectionClass($className);
         if (!$reflection->isSubclassOf('ZF\Doctrine\Mapper\DoctrineMapper')) {
@@ -102,7 +103,7 @@ class DoctrineMapperFactory implements AbstractFactoryInterface
         $config = $serviceLocator->get('Config');
         $doctrineMapperConfig = $config['doctrine-mappers'][$requestedName];
 
-        $className = isset($doctrineMapperConfig['class']) ? $doctrineMapperConfig['class'] : $requestedName;
+        $className = isset($doctrineMapperConfig['class']) ? $doctrineMapperConfig['class'] : self::DEFAULT_MAPPER_CLASS;
         $className = $this->normalizeClassname($className);
 
         $objectManager = $this->loadObjectManager($serviceLocator, $doctrineMapperConfig);
