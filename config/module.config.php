@@ -22,4 +22,7 @@ return [
             'ZfDoctrineQueryBuilderOrderByManagerOdm' => 'ZF\Doctrine\QueryBuilder\OrderBy\Service\ODMOrderByManagerFactory',
         ],
     ],
+    'abstract_factories' => [
+        Mapper\DoctrineMapperFactory::class,
+    ],
 ];
