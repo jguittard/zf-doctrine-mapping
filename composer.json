@@ -23,7 +23,7 @@
     "zendframework/zend-modulemanager": "~2.5",
     "zendframework/zend-mvc": "~2.5",
     "zendframework/zend-servicemanager": "~2.5",
-    "ocramius/generated-hydrator": "~2.0"
+    "zendframework/zend-hydrator": "~1.1|^2.0"
   },
   "require-dev": {
     "doctrine/doctrine-orm-module": "0.*@dev",

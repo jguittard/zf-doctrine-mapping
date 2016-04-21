@@ -12,7 +12,6 @@
 
 return [
     'doctrine-mappers' => [
-        'target_dir' => '',
     ],
     'zf-doctrine-querybuilder-options' => [
         'filter_key' => 'filter',

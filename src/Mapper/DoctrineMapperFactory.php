@@ -2,7 +2,6 @@
 
 namespace ZF\Doctrine\Mapper;
 
-use GeneratedHydrator\Configuration as HydratorConfig;
 use Doctrine\Common\Persistence\ObjectManager;
 use Zend\Hydrator\HydratorInterface;
 use Zend\ServiceManager\AbstractFactoryInterface;
@@ -156,11 +155,14 @@ class DoctrineMapperFactory implements AbstractFactoryInterface
      */
     protected function loadHydrator(ServiceLocatorInterface $serviceLocator, $mapperConfig)
     {
-        $config = $serviceLocator->get('Config');
-        $mapperConfig = new HydratorConfig($mapperConfig['entity_class']);
-        $mapperConfig->setGeneratedClassesTargetDir($config['doctrine-mappers']['target_dir']);
-        $hydratorClass = $mapperConfig->createFactory()->getHydratorClass();
-        return new $hydratorClass;
+        /** @var ServiceLocatorInterface $hydratorManager */
+        $hydratorManager = $serviceLocator->get('HydratorManager');
+
+        if (!$hydratorManager->has($mapperConfig['hydrator'])) {
+            throw new ServiceNotCreatedException('');
+        }
+
+        return $hydratorManager->get($mapperConfig['hydrator']);
     }
 
     /**
