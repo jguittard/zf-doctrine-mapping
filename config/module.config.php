@@ -20,6 +20,7 @@ return [
             'ZfDoctrineQueryBuilderFilterManagerOdm' => 'ZF\Doctrine\QueryBuilder\Filter\Service\ODMFilterManagerFactory',
             'ZfDoctrineQueryBuilderOrderByManagerOrm' => 'ZF\Doctrine\QueryBuilder\OrderBy\Service\ORMOrderByManagerFactory',
             'ZfDoctrineQueryBuilderOrderByManagerOdm' => 'ZF\Doctrine\QueryBuilder\OrderBy\Service\ODMOrderByManagerFactory',
+            'ZfDoctrineQueryProviderManager' => Query\Provider\Service\QueryProviderManagerFactory::class,
         ],
     ],
     'abstract_factories' => [

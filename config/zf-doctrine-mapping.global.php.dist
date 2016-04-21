@@ -11,7 +11,10 @@
  */
 
 return [
-    'doctrine-mappers' => [
+    'zf-doctrine-query-provider' => [
+        'factories' => [
+            'default_orm' => 'ZF\Doctrine\Query\Provider\DefaultOrmFactory',
+        ],
     ],
     'zf-doctrine-querybuilder-options' => [
         'filter_key' => 'filter',

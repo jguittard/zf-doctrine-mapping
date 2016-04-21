@@ -61,7 +61,8 @@ class DoctrineMapperFactory implements AbstractFactoryInterface
         $className = isset($config['class']) ? $config['class'] : self::DEFAULT_MAPPER_CLASS;
         $className = $this->normalizeClassname($className);
         $reflection = new \ReflectionClass($className);
-        if (!$reflection->isSubclassOf('ZF\Doctrine\Mapper\DoctrineMapper')) {
+        $instance = $reflection->newInstanceWithoutConstructor();
+        if (!$instance instanceof DoctrineMapper) {
             // @codeCoverageIgnoreStart
             throw new ServiceNotFoundException(
                 sprintf(

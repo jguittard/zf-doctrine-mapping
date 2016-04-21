@@ -17,5 +17,5 @@ use Zend\Mvc\Service\AbstractPluginManagerFactory;
  */
 class QueryProviderManagerFactory extends AbstractPluginManagerFactory
 {
-    const PLUGIN_MANAGER_CLASS = 'ZF\Doctrine\QueryBuilder\Query\Service\QueryProviderManager';
+    const PLUGIN_MANAGER_CLASS = 'ZF\Doctrine\Query\Provider\Service\QueryProviderManager';
 }
