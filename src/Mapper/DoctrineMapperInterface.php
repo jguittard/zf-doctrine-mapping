@@ -22,7 +22,14 @@ interface DoctrineMapperInterface
      * @param mixed $data
      * @return EntityInterface
      */
-    public function store($data);
+    public function create($data);
+
+    /**
+     * @param mixed $id
+     * @param mixed $data
+     * @return EntityInterface
+     */
+    public function save($id, $data);
 
     /**
      * @param mixed $id

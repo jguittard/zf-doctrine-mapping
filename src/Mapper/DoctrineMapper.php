@@ -134,34 +134,58 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
     }
 
     /**
-     * @param array|Traversable|EntityInterface $data
+     * @param mixed $data
      * @return EntityInterface
      */
-    public function store($data)
+    public function create($data)
     {
         if ($data instanceof EntityInterface) {
-            $entity = $this->fetchOne($data->getId());
-            $create = false;
-        } elseif (is_array($data) || $data instanceof Traversable) {
-            $data = (array)$data;
-            $entityClass = $this->getEntityClass();
-            /** @var EntityInterface $entity */
-            $entity = new $entityClass;
-            $create = true;
-        } else {
+            $data = $data->getArrayCopy();
+        } elseif (!is_array($data) || !$data instanceof Traversable) {
             throw new InvalidArgumentException('data must either be an array, a Traversable object or an instance of EntityInterface');
         }
 
-        $this->triggerDoctrineEvent($create ? DoctrineEvent::EVENT_CREATE_PRE : DoctrineEvent::EVENT_UPDATE_PRE, $entity, $data);
+        $entityClass = $this->getEntityClass();
+        /** @var EntityInterface $entity */
+        $entity = new $entityClass;
+
+        $this->triggerDoctrineEvent(DoctrineEvent::EVENT_CREATE_PRE, $entity, $data);
         $hydrator = $this->getHydrator();
         $hydrator->hydrate((array)$data, $entity);
         $this->getObjectManager()->persist($entity);
 
-        $this->triggerDoctrineEvent($create ? DoctrineEvent::EVENT_CREATE_POST : DoctrineEvent::EVENT_UPDATE_POST, $entity, $data);
+        $this->triggerDoctrineEvent(DoctrineEvent::EVENT_CREATE_POST, $entity, $data);
         $this->getObjectManager()->flush();
 
         return $entity;
     }
+
+    /**
+     * @param mixed $id
+     * @param mixed $data
+     * @return EntityInterface
+     */
+    public function save($id, $data)
+    {
+        if ($data instanceof EntityInterface) {
+            $data = $data->getArrayCopy();
+        } elseif (!is_array($data) || !$data instanceof Traversable) {
+            throw new InvalidArgumentException('data must either be an array, a Traversable object or an instance of EntityInterface');
+        }
+        /** @var EntityInterface $entity */
+        $entity = $this->fetchOne($id);
+
+        $this->triggerDoctrineEvent(DoctrineEvent::EVENT_UPDATE_PRE, $entity, $data);
+        $hydrator = $this->getHydrator();
+        $hydrator->hydrate((array)$data, $entity);
+        $this->getObjectManager()->persist($entity);
+
+        $this->triggerDoctrineEvent(DoctrineEvent::EVENT_UPDATE_POST, $entity, $data);
+        $this->getObjectManager()->flush();
+
+        return $entity;
+    }
+
 
     /**
      * @param mixed $id

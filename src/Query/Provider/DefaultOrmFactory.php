@@ -27,7 +27,7 @@ class DefaultOrmFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         /** @var ServiceLocatorInterface $services */
-        $services = $serviceLocator->getServiceLocator()->getServiceLocator();
+        $services = $serviceLocator->getServiceLocator();
         $config = $services->get('Config');
         $filterKey = isset($config['zf-doctrine-querybuilder-options']['order_by_key']) ?
             $config['zf-doctrine-querybuilder-options']['order_by_key'] : 'order-by';

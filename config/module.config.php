@@ -22,8 +22,8 @@ return [
             'ZfDoctrineQueryBuilderOrderByManagerOdm' => 'ZF\Doctrine\QueryBuilder\OrderBy\Service\ODMOrderByManagerFactory',
             'ZfDoctrineQueryProviderManager' => Query\Provider\Service\QueryProviderManagerFactory::class,
         ],
-    ],
-    'abstract_factories' => [
-        Mapper\DoctrineMapperFactory::class,
+        'abstract_factories' => [
+            Mapper\DoctrineMapperFactory::class,
+        ],
     ],
 ];
