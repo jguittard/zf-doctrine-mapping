@@ -141,7 +141,7 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
     {
         if ($data instanceof EntityInterface) {
             $data = $data->getArrayCopy();
-        } elseif (!is_array($data) || !$data instanceof Traversable) {
+        } elseif (!is_array($data)) {
             throw new InvalidArgumentException('data must either be an array, a Traversable object or an instance of EntityInterface');
         }
 
@@ -169,7 +169,7 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
     {
         if ($data instanceof EntityInterface) {
             $data = $data->getArrayCopy();
-        } elseif (!is_array($data) || !$data instanceof Traversable) {
+        } elseif (!is_array($data)) {
             throw new InvalidArgumentException('data must either be an array, a Traversable object or an instance of EntityInterface');
         }
         /** @var EntityInterface $entity */
