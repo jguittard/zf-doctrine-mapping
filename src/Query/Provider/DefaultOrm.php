@@ -38,12 +38,12 @@ class DefaultOrm extends AbstractQueryProvider
             );
         }
 
-        if (isset($request[$this->orderByKey])) {
+        if (isset($parameters[$this->orderByKey])) {
             $metadata = $this->getObjectManager()->getClassMetadata($entityClass);
             $this->orderByManager->orderBy(
                 $queryBuilder,
                 $metadata,
-                $request[$this->orderByKey]
+                $parameters[$this->orderByKey]
             );
         }
 

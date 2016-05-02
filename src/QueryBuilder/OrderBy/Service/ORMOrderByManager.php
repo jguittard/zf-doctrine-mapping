@@ -22,10 +22,11 @@ class ORMOrderByManager extends AbstractPluginManager
 {
     /**
      * @param QueryBuilder $queryBuilder
-     * @param $options
+     * @param mixed $metadata
+     * @param array $options
      * @return void
      */
-    public function orderBy(QueryBuilder $queryBuilder, $options)
+    public function orderBy(QueryBuilder $queryBuilder, $metadata, $options)
     {
         foreach ($options as $option) {
             if (!isset($option['type']) || false == $option['type']) {

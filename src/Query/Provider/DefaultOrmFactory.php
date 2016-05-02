@@ -29,12 +29,18 @@ class DefaultOrmFactory implements FactoryInterface
         /** @var ServiceLocatorInterface $services */
         $services = $serviceLocator->getServiceLocator();
         $config = $services->get('Config');
-        $filterKey = isset($config['zf-doctrine-querybuilder-options']['order_by_key']) ?
+        $orderByKey = isset($config['zf-doctrine-querybuilder-options']['order_by_key']) ?
             $config['zf-doctrine-querybuilder-options']['order_by_key'] : 'order-by';
-        $orderByKey = isset($config['zf-doctrine-querybuilder-options']['filter_key']) ?
+
+        $orderByManager = $services->get('ZfDoctrineQueryBuilderOrderByManagerOrm');
+        $filterManager = $services->get('ZfDoctrineQueryBuilderFilterManagerOrm');
+
+        $filterKey = isset($config['zf-doctrine-querybuilder-options']['filter_key']) ?
             $config['zf-doctrine-querybuilder-options']['filter_key'] : 'filter';
 
         $qp = new DefaultOrm();
+        $qp->setOrderByManager($orderByManager);
+        $qp->setFilterManager($filterManager);
         $qp->setFilterKey($filterKey);
         $qp->setOrderByKey($orderByKey);
 
