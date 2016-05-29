@@ -5,7 +5,7 @@ namespace ZF\Doctrine\QueryBuilder\OrderBy\Service;
 use Doctrine\ORM\QueryBuilder;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception;
-use ZF\Doctrine\QueryBuilder\OrderByInterface;
+use ZF\Doctrine\QueryBuilder\OrderBy\OrderByInterface;
 
 /**
  * Class ORMOrderByManager
@@ -37,7 +37,7 @@ class ORMOrderByManager extends AbstractPluginManager
 
             /** @var OrderByInterface $orderByHandler */
             $orderByHandler = $this->get(strtolower($option['type']), [$this]);
-            $orderByHandler->orderBy($queryBuilder, $options);
+            $orderByHandler->orderBy($queryBuilder, $option);
         }
     }
 

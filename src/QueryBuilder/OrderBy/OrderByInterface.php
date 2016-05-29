@@ -1,6 +1,6 @@
 <?php
 
-namespace ZF\Doctrine\QueryBuilder;
+namespace ZF\Doctrine\QueryBuilder\OrderBy;
 
 use Doctrine\ORM\QueryBuilder;
 

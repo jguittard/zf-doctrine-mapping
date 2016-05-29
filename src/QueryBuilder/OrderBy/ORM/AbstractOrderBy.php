@@ -4,7 +4,7 @@ namespace ZF\Doctrine\QueryBuilder\OrderBy\ORM;
 
 use Doctrine\ORM\QueryBuilder;
 use ZF\Doctrine\QueryBuilder\OrderBy\Service\ORMOrderByManager;
-use ZF\Doctrine\QueryBuilder\OrderByInterface;
+use ZF\Doctrine\QueryBuilder\OrderBy\OrderByInterface;
 
 /**
  * Class AbstractOrderBy

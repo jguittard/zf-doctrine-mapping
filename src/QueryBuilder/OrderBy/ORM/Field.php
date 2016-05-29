@@ -20,13 +20,13 @@ class Field extends AbstractOrderBy
 {
     /**
      * @param QueryBuilder $queryBuilder
-     * @param array $options
+     * @param array $option
      * @throws Exception
      * @return void
      */
-    public function orderBy(QueryBuilder $queryBuilder, array $options)
+    public function orderBy(QueryBuilder $queryBuilder, array $option)
     {
-        $options['alias'] = isset($options['alias']) ? $options['alias'] : 'row';
+        $option['alias'] = isset($option['alias']) ? $option['alias'] : 'row';
         if (!isset($option['direction']) || !in_array(strtolower($option['direction']), ['asc', 'desc'])) {
             throw new Exception('Invalid direction in orderby directive');
         }
