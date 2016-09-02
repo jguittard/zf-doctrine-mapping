@@ -25,27 +25,27 @@ interface DoctrineMapperInterface
     public function create($data);
 
     /**
-     * @param mixed $id
+     * @param string $id
      * @param mixed $data
      * @return EntityInterface
      */
-    public function save($id, $data);
+    public function save(string $id, $data): EntityInterface;
 
     /**
      * @param mixed $id
      * @return EntityInterface
      */
-    public function fetchOne($id);
+    public function fetchOne(string $id): EntityInterface;
 
     /**
      * @param array $params
      * @return EntityInterface[]|Collection
      */
-    public function fetchAll($params = []);
+    public function fetchAll(array $params = []): Collection;
 
     /**
      * @param mixed $id
      * @return bool
      */
-    public function delete($id);
+    public function delete(string $id): bool;
 }

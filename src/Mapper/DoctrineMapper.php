@@ -9,6 +9,7 @@ use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use DoctrineModule\Persistence\ProvidesObjectManager;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerAwareTrait;
+use Zend\EventManager\ResponseCollection;
 use Zend\Hydrator\HydratorAwareInterface;
 use Zend\Hydrator\HydratorAwareTrait;
 use ZF\Doctrine\Entity\Collection;
@@ -44,7 +45,7 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
     protected $collectionClass;
 
     /**
-     * @var QueryProviderInterface[]
+     * @var QueryProviderInterface[]|array
      */
     protected $queryProviders;
 
@@ -53,7 +54,7 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
      *
      * @return string
      */
-    public function getEntityClass()
+    public function getEntityClass(): string
     {
         return $this->entityClass;
     }
@@ -62,7 +63,7 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
      * @param string $entityClass
      * @return DoctrineMapper
      */
-    public function setEntityClass($entityClass)
+    public function setEntityClass(string $entityClass): DoctrineMapper
     {
         $this->entityClass = $entityClass;
         return $this;
@@ -73,7 +74,7 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
      *
      * @return string
      */
-    public function getCollectionClass()
+    public function getCollectionClass(): string
     {
         return $this->collectionClass;
     }
@@ -84,7 +85,7 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
      * @param string $collectionClass
      * @return DoctrineMapper
      */
-    public function setCollectionClass($collectionClass)
+    public function setCollectionClass(string $collectionClass): DoctrineMapper
     {
         $this->collectionClass = $collectionClass;
         return $this;
@@ -104,7 +105,7 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
      * @param \ZF\Doctrine\Query\Provider\QueryProviderInterface[] $queryProviders
      * @return DoctrineMapper
      */
-    public function setQueryProviders($queryProviders)
+    public function setQueryProviders($queryProviders): DoctrineMapper
     {
         // @codeCoverageIgnoreStart
         if (!is_array($queryProviders) && !$queryProviders instanceof Traversable) {
@@ -137,7 +138,7 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
      * @param mixed $data
      * @return EntityInterface
      */
-    public function create($data)
+    public function create($data): EntityInterface
     {
         if ($data instanceof EntityInterface) {
             $data = $data->getArrayCopy();
@@ -161,11 +162,11 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
     }
 
     /**
-     * @param mixed $id
+     * @param string $id
      * @param mixed $data
      * @return EntityInterface
      */
-    public function save($id, $data)
+    public function save(string $id, $data): EntityInterface
     {
         if ($data instanceof EntityInterface) {
             $data = $data->getArrayCopy();
@@ -188,10 +189,10 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
 
 
     /**
-     * @param mixed $id
+     * @param string $id
      * @return EntityInterface
      */
-    public function fetchOne($id)
+    public function fetchOne(string $id): EntityInterface
     {
         $event = new DoctrineEvent(DoctrineEvent::EVENT_FETCH_PRE, $this);
         $event->setEntityId($id)
@@ -208,7 +209,7 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
      * @param array $params
      * @return EntityInterface[]|Collection
      */
-    public function fetchAll($params = [])
+    public function fetchAll(array $params = []): Collection
     {
         $this->triggerDoctrineEvent(DoctrineEvent::EVENT_FETCH_ALL_PRE, $this->getEntityClass(), $params);
         $queryProvider = $this->getQueryProvider('fetch_all');
@@ -216,6 +217,7 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
 
         $adapter = $queryProvider->getPaginatedQuery($queryBuilder);
         $reflection = new ReflectionClass($this->getCollectionClass());
+        /** @var Collection $collection */
         $collection = $reflection->newInstance($adapter);
 
         $this->triggerDoctrineEvent(DoctrineEvent::EVENT_FETCH_ALL_POST, $this->getEntityClass(), $params);
@@ -227,9 +229,18 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
      * @param mixed $id
      * @return bool
      */
-    public function delete($id)
+    public function delete(string $id): bool
     {
-        // TODO: Implement delete() method.
+        $entity = $this->fetchOne($id);
+        if (!$entity) {
+            return false;
+        }
+        $this->triggerDoctrineEvent(DoctrineEvent::EVENT_DELETE_PRE, $entity, compact('id'));
+        $this->getObjectManager()->remove($entity);
+        $this->triggerDoctrineEvent(DoctrineEvent::EVENT_DELETE_POST, $entity, compact('id'));
+
+        $this->getObjectManager()->flush();
+        return true;
     }
 
     /**
@@ -238,7 +249,7 @@ class DoctrineMapper implements EventManagerAwareInterface, DoctrineMapperInterf
      * @param array|null $data
      * @return \Zend\EventManager\ResponseCollection
      */
-    private function triggerDoctrineEvent($name, $entity, array $data = null)
+    private function triggerDoctrineEvent($name, $entity, array $data = null): ResponseCollection
     {
         $event = new DoctrineEvent($name, $this);
         $event->setData($data)

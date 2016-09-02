@@ -29,5 +29,5 @@ interface EntityInterface extends ArraySerializableInterface
      * @param mixed $id The unique identifier
      * @return mixed The current class
      */
-    public function setId($id);
+    public function setId(string $id): EntityInterface;
 }
