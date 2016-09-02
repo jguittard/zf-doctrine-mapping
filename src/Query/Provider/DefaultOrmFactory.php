@@ -2,8 +2,11 @@
 
 namespace ZF\Doctrine\Query\Provider;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
+use Interop\Container\Exception\ContainerException;
+use Zend\ServiceManager\Exception\ServiceNotCreatedException;
+use Zend\ServiceManager\Exception\ServiceNotFoundException;
+use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Class DefaultOrmFactory
@@ -19,15 +22,21 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class DefaultOrmFactory implements FactoryInterface
 {
     /**
-     * Create service
+     * Create an object
      *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
+     * @param  ContainerInterface $container
+     * @param  string $requestedName
+     * @param  null|array $options
+     * @return object
+     * @throws ServiceNotFoundException if unable to resolve the service.
+     * @throws ServiceNotCreatedException if an exception is raised when
+     *     creating a service.
+     * @throws ContainerException if any other error occurs
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /** @var ServiceLocatorInterface $services */
-        $services = $serviceLocator->getServiceLocator();
+        /** @var ContainerInterface $container */
+        $services = $container->getServiceLocator();
         $config = $services->get('Config');
         $orderByKey = isset($config['zf-doctrine-querybuilder-options']['order_by_key']) ?
             $config['zf-doctrine-querybuilder-options']['order_by_key'] : 'order-by';
@@ -46,5 +55,4 @@ class DefaultOrmFactory implements FactoryInterface
 
         return $qp;
     }
-
 }

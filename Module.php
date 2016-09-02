@@ -18,24 +18,8 @@ use Zend\ModuleManager\ModuleManager;
  * @license     http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  * @copyright   Copyright (c) 2016 Zend Technologies USA Inc. (http://www.zend.com)
  */
-class Module implements ConfigProviderInterface, AutoloaderProviderInterface, DependencyIndicatorInterface
+class Module implements ConfigProviderInterface, DependencyIndicatorInterface
 {
-    /**
-     * Return an array for passing to Zend\Loader\AutoloaderFactory.
-     *
-     * @return array
-     */
-    public function getAutoloaderConfig()
-    {
-        return [
-            'Zend\Loader\StandardAutoloader' => [
-                'namespaces' => [
-                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ],
-            ],
-        ];
-    }
-
     /**
      * Returns configuration to merge with application configuration
      *
