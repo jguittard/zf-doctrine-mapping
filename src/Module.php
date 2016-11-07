@@ -2,9 +2,6 @@
 
 namespace ZF\Doctrine;
 
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\ModuleManager;
 
 /**
@@ -18,7 +15,7 @@ use Zend\ModuleManager\ModuleManager;
  * @license     http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  * @copyright   Copyright (c) 2016 Zend Technologies USA Inc. (http://www.zend.com)
  */
-class Module implements ConfigProviderInterface, DependencyIndicatorInterface
+class Module
 {
     /**
      * Returns configuration to merge with application configuration
